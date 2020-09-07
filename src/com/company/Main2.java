@@ -2,10 +2,7 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class Main2 extends JFrame {
 
@@ -55,8 +52,8 @@ public class Main2 extends JFrame {
 
         // Text Field
         textField1 = new JTextField("T", 15);
-        //ListenForKeys listenForKeys = ListenForKeys();
-        //textField1.addKeyListener(listenForKeys);
+        ListenForKeys listenForKeys = new ListenForKeys();
+        textField1.addKeyListener(listenForKeys);
 
 
         // Panel
@@ -66,17 +63,27 @@ public class Main2 extends JFrame {
 
         this.add(thePanel);
 
+        // Listening events for window
+        ListenForWindow listenForWindow = new ListenForWindow();
+        this.addWindowListener(listenForWindow);
+
+        // Mouse listener
+        ListenForMouse listenForMouse = new ListenForMouse();
+        thePanel.addMouseListener(listenForMouse);
+
+        this.setVisible(true);
+
 
     }
 
     // Implementing Listeners
     private class ListenForButton implements ActionListener {
 
-        public void actionPerformed(ActionEvent event) {
-            if (event.getSource() == button1) {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == button1) {
                 buttonClicked++;
                 textArea1.append("Button clicked " + buttonClicked + " times\n");
-                event.getSource().toString();
+                e.getSource().toString();
             }
         }
 
@@ -97,6 +104,76 @@ public class Main2 extends JFrame {
 
         @Override
         public void keyReleased(KeyEvent e) {
+
+        }
+    }
+
+    private class ListenForWindow implements WindowListener{
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+            textArea1.append("Window is created");
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            textArea1.append("Window in normal state");
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+            textArea1.append("Window is active");
+
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            textArea1.append("Window is not active");
+        }
+    }
+
+    private class ListenForMouse implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            textArea1.append("Mouse Panel pos: " + e.getX() + " " + e.getY() + "\n");
+            textArea1.append("Mouse Screen pos: " + e.getXOnScreen() + " " + e.getYOnScreen() + "\n");
+            textArea1.append("Mouse Button: " + e.getButton() + "\n");
+            textArea1.append("Mouse Clicks: " + e.getClickCount() + "\n");
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
 
         }
     }
